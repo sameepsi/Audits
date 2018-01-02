@@ -6,7 +6,7 @@ In this Smart Contract audit we’ll cover the following topics:
 4. Critical vulnerabilities found in the contract
 5. Medium vulnerabilities found in the contract
 6. Low severity vulnerabilities found
-7.Good to have
+7. Good to have
 8. Summary of the audit
 
 ## 1. Disclaimer

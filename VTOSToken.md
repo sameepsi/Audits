@@ -68,7 +68,8 @@ require(balances[owner]>=amount[i]); after line 139
 ```
 
 * destroyVTOSToken- Since you are removing tokens from the 'to' address and not assigning to anyone, the tokens are lost or burned and hence the totalSupply should also be reduced otherwise it will be an inconsistent state where total of all balances will be less than totalSupply, It will be good if you also keep track of the burned tokens so far with variable like _totalBurned and update it everytime tokens are burned or destroyed.
-Following lines needs to be added to maintain the consistent state 
+
+ Following lines needs to be added to maintain the consistent state 
 ```
 _totalSupply=_totalSupply.sub(value) after line 151
 ```
@@ -114,7 +115,7 @@ function mul(uint256 a, uint256 b) internal pure returns (uint256) {
 
 * _tokenLeft should be removed as its purpose is not clear.
 
-* After line 85 a Transfer event should be fired since you are actually assigning all the tokens to the owner.
+* After line 85 a Transfer event should be fired since you are actually assigning/transferring all the tokens to the owner.
 
 ##7. Good to have
 

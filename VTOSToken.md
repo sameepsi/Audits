@@ -54,6 +54,8 @@ You can read more about the attack here: [ERC20 Short Address Attacks](http://ve
 * Because of above problem the fallback method at line 90 does nothing since it calls tokenSale. So the investor who will pay to this contract will receive nothing in return and their money will be lost.
 
 * sendVTOSToken- In line 127 we check whether _tokenLeft>=value whereas in line 130 we deduct the value from the owner's balance. Since the synchronicity between the _tokenLeft and balance of owner is not maintained anywhere, there will be a case when _tokenLeft>=value but balances[owner]<value.
+
+* Since this contract supports payable(fallback) method and hence receiving ethers. There should be a method using which owner or other parties are able to withdraw those ethers from the contract, otherwise those funds will always be kept with the contract and no-one will be able to access those funds. Since contract accounts are not external accounts hence withdraw method should be there for thos contracts which are collecting funds in form of ether or any other tokens.
 ```
 In line 127 instead of (_tokenLeft>=value) please check (balances[owner]>=value);
 ```

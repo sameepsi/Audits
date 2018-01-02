@@ -107,8 +107,6 @@ function mul(uint256 a, uint256 b) internal pure returns (uint256) {
 
 * Comment at line #63 should be owner of the contract. Since specified owner is not the owner of the tokens but the contracts. Owner of the tokens are the token holders.
 
-* As per standard variable names should start with _ or lowercase letters. Change PRICE to _price(if internal) or price(if public).
-
 * As per ERC20 token standard decimals should be unit8 instead of uint256. If you mention uint it is by default uint256.
 
 * Assign all functions the visibility modifier like public, internal or external. By default the modifier is assumed to be public by the solidity compiler.

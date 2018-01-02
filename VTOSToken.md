@@ -49,7 +49,7 @@ You can read more about the attack here: [ERC20 Short Address Attacks](http://ve
 
 * Lines from line number 100 to 109 are commented which makes tokenSale method literally do nothing. Either the code needs to un-commented or remove the tokenSale method.
 
-Generally the commented code should not be the part of deployable code.
+  Generally the commented code should not be the part of deployable code.
 
 * Because of above problem the fallback method at line 90 does nothing since it calls tokenSale. So the investor who will pay to this contract will receive nothing in return and their money will be lost.
 
@@ -58,16 +58,17 @@ Generally the commented code should not be the part of deployable code.
 In line 127 instead of (_tokenLeft>=value) please check (balances[owner]>=value);
 ```
 
-* sendVTOSTokenToMultiAddr- The conditions is not checked whether the owner has the required amount of the token is available with the owner before adding it to the receivers address. This will create invalid state and receivers will receive tokens more than the supplied tokens.
+* sendVTOSTokenToMultiAddr- The conditions is not checked whether the owner has the required amount of the token available with it before adding it to the receivers address. This will create invalid state and receivers will receive tokens more than the supplied tokens.
 
-Though the sub method of safeMath will not allow you to minus something from 0 but still code should also handle this vulnerability.
+  Though the sub method of safeMath will not allow you to minus something from 0 but still code should also handle this vulnerability.
 
-Please add 
+  Please add 
 ```
 require(balances[owner]>=amount[i]); after line 139
 ```
 
-* destroyVTOSToken- Since you are removing tokens from the 'to' address and not assigning to anyone, the tokens and lost or burned and hence the totalSupply should also be reduced otherwise it will be an inconsistent state, i.e. add 
+* destroyVTOSToken- Since you are removing tokens from the 'to' address and not assigning to anyone, the tokens are lost or burned and hence the totalSupply should also be reduced otherwise it will be an inconsistent state where total of all balances will be less than totalSupply, It will be good if you also keep track of the burned tokens so far with variable like _totalBurned and update it everytime tokens are burned or destroyed.
+Following lines needs to be added to maintain the consistent state 
 ```
 _totalSupply=_totalSupply.sub(value) after line 151
 ```
@@ -85,6 +86,7 @@ This is not a good practice since there could be major changes between versions 
 * I would recommend you to use latest versions of solidity compiler instead of older versions as latest versions contains many critical bug fixes. Using compiler version 0.4.19 is recommended.
 
 * The constructor of the ERC20 token should not payable.
+   Please remove payable from line #82
 
 ## 6. Low severity vulnerabilities found
 
@@ -125,13 +127,8 @@ Ex- Alice has 1000 tokens and she has already approved bob to spend 500 tokens o
 
 
 ## 8. Summary of the audit
-```
-Overall the code is well commented.
+* Overall the code is well commented.
 My final recommendation would be to pay more attention to the visibility of the functions since it’s quite important to define who’s supposed to executed the functions and to follow best practices regarding the use of assert, require etc. (which you are doing ;).
 I will also recommend to not put commented code. Because of commented code certain portion of the contract is useless and hence the contract is not ready for deployment and is not safe to use, since the commented code deals with the payable methods and will result in the loss of funds.
-```
- All the ERC20 functions are included but approve, transfer and transferFrom functions are not ERC20 compliant.
 
-
-
-
+*  All the ERC20 functions are included but approve, transfer and transferFrom functions are not ERC20 compliant.

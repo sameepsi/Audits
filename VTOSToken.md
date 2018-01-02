@@ -117,7 +117,7 @@ function mul(uint256 a, uint256 b) internal pure returns (uint256) {
 
 * After line 85 a Transfer event should be fired since you are actually assigning/transferring all the tokens to the owner.
 
-##7. Good to have
+## 7. Good to have
 
 * In approve and transferFrom please keep note of https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
 
@@ -133,3 +133,9 @@ My final recommendation would be to pay more attention to the visibility of the 
 I will also recommend to not put commented code. Because of commented code certain portion of the contract is useless and hence the contract is not ready for deployment and is not safe to use, since the commented code deals with the payable methods and will result in the loss of funds.
 
 *  All the ERC20 functions are included but approve, transfer and transferFrom functions are not ERC20 compliant.
+
+
+
+
+
+

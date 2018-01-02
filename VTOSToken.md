@@ -45,47 +45,53 @@ This attack affects ERC20 tokens, was discovered by the Golem team and consists 
 You can read more about the attack here: [ERC20 Short Address Attacks](http://vessenes.com/the-erc20-short-address-attack-explained/)
 
 ## 4. Critical vulnerabilities found in the contract
-* Line 1:  
-As per ERC20 standard transfer, transferFrom and approve methods returns boolean indicating whether the said operation is successfully completed or not. This is critical as it makes the token non ERC20 compliant.
-*Point 2:
-Lines from line number 100 to 109 are commented which makes tokenSale method literally do nothing. Either the code needs to un-commented or remove the tokenSale method.
+* As per ERC20 standard transfer, transferFrom and approve methods returns boolean indicating whether the said operation is successfully completed or not. This is critical as it makes the token non ERC20 compliant.
+
+* Lines from line number 100 to 109 are commented which makes tokenSale method literally do nothing. Either the code needs to un-commented or remove the tokenSale method.
+
 Generally the commented code should not be the part of deployable code.
-*Point 3:
-Because of above problem the fallback method at line 90 does nothing since it calls tokenSale. So the investor who will pay to this contract will receive nothing in return and their money will be lost.
-*Point 4:
-sendVTOSToken- In line 127 we check whether _tokenLeft>=value whereas in line 130 we deduct the value from the owner's balance. Since the synchronicity between the _tokenLeft and balance of owner is not maintained anywhere, there will be a case when _tokenLeft>=value but balances[owner]<value. In line 127 instead of (_tokenLeft>=value) please check (balances[owner]>=value);
-*Point 5:
-sendVTOSTokenToMultiAddr- The conditions is not checked whether the owner has the required amount of the token is available with the owner before adding it to the receivers address. This will create invalid state and receivers will receive tokens more than the supplied tokens.
+
+* Because of above problem the fallback method at line 90 does nothing since it calls tokenSale. So the investor who will pay to this contract will receive nothing in return and their money will be lost.
+
+* sendVTOSToken- In line 127 we check whether _tokenLeft>=value whereas in line 130 we deduct the value from the owner's balance. Since the synchronicity between the _tokenLeft and balance of owner is not maintained anywhere, there will be a case when _tokenLeft>=value but balances[owner]<value.
+```
+In line 127 instead of (_tokenLeft>=value) please check (balances[owner]>=value);
+```
+
+* sendVTOSTokenToMultiAddr- The conditions is not checked whether the owner has the required amount of the token is available with the owner before adding it to the receivers address. This will create invalid state and receivers will receive tokens more than the supplied tokens.
+
 Though the sub method of safeMath will not allow you to minus something from 0 but still code should also handle this vulnerability.
-Please add require(balances[owner]>=amount[i]); after line 139
-*Point 6:
-destroyVTOSToken- Since you are removing tokens from the 'to' address and not assigning to anyone, the tokens and lost or burned and hence the totalSupply should also be reduced otherwise it will be an inconsistent state, i.e. add 
+
+Please add 
+```
+require(balances[owner]>=amount[i]); after line 139
+```
+
+* destroyVTOSToken- Since you are removing tokens from the 'to' address and not assigning to anyone, the tokens and lost or burned and hence the totalSupply should also be reduced otherwise it will be an inconsistent state, i.e. add 
+```
 _totalSupply=_totalSupply.sub(value) after line 151
-*Point 7:
-destroyVTOSToken- In line 149 we check _totalSupply>=value whereas in line 151 we reduce the amount from the 'to' balance. Instead we should check whether the said 'to' account actually contains tokens>=value. Replace line 149 with 
+```
+* destroyVTOSToken- In line 149 we check _totalSupply>=value whereas in line 151 we reduce the amount from the 'to' balance. Instead we should check whether the said 'to' account actually contains tokens>=value. Replace line 149 with 
+```
 require(to != 0x0 && value > 0 && balances[to] >= value);
+```
 
 ## 5. Medium vulnerabilities found in the contract
-```
-* Point 1:  
-```
-You’re specifying a pragma version with the caret symbol (^) up front which tells the compiler to use any version of solidity bigger than 0.4.11 .  
+
+* You’re specifying a pragma version with the caret symbol (^) up front which tells the compiler to use any version of solidity bigger than 0.4.11 .  
+
 This is not a good practice since there could be major changes between versions that would make your code unstable. That’s why I recommend to set a fixed version without the caret like 0.4.11.
-```
-* Point 2:  
-```
-I would recommend you to use latest versions of solidity compiler instead of older versions as latest versions contains many critical bug fixes. Using compiler version 0.4.19 is recommended.
-```
-*Point 3:
-```
-The constructor of the ERC20 token should not payable.
-```
+
+* I would recommend you to use latest versions of solidity compiler instead of older versions as latest versions contains many critical bug fixes. Using compiler version 0.4.19 is recommended.
+
+* The constructor of the ERC20 token should not payable.
+
 ## 6. Low severity vulnerabilities found
-```
-*Point 1:
-```
-Use view or pure instead of constant- This will increase the readability of the functions and will more clearly specify the purpose of the function. view functions means that they will not make any changes to the storage but will make reads from the storage. Pure functions means they will neither make any changes to the storage nor will read from the storage.
-```
+
+* Use view or pure instead of constant- This will increase the readability of the functions and will more clearly specify the purpose of the function. view functions means that they will not make any changes to the storage but will make reads from the storage.
+
+Pure functions means they will neither make any changes to the storage nor will read from the storage.
+
 Ex change function function mul() of SafeMath to 
 ```
 function mul(uint256 a, uint256 b) internal pure returns (uint256) {
@@ -94,44 +100,26 @@ function mul(uint256 a, uint256 b) internal pure returns (uint256) {
         return c;
     }
 ```
-*Point 2:
-```
-Token name and symbol should not be same. Token name identifies the proper name of the token where symbol is like identifier. For example name= GOLD PHOENIX, symbol- GPHX
-```
-*Point 3:
-```
-comment at line #63 should be owner of the contract. Since specified owner is not the owner of the tokens but the contracts. Owner of the tokens are the token holders.
-```
-*Point 4:
-```
-As per standard variable names should start with _ or lowercase letters. Change PRICE to _price(if internal) or price(if public).
-```
-*Point 5:
-```
-As per ERC20 token standard decimals should be unit8 instead of uint256. If you mention uint it is by default uint256.
-```
-*Point 6:
-```
-Assign all functions the visibility modifier like public, internal or external. By default the modifier is assumed to be public by the solidity compiler.
-```
-*Point 7:
-```
-_tokenLeft should be removed as its purpose is not clear.
-```
-*Point 8:
-```
-After line 85 a Transfer event should be fired since you are actually assigning all the tokens to the owner.
-```
+* Token name and symbol should not be same. Token name identifies the proper name of the token where symbol is like identifier. For example name= GOLD PHOENIX, symbol- GPHX
+
+* Comment at line #63 should be owner of the contract. Since specified owner is not the owner of the tokens but the contracts. Owner of the tokens are the token holders.
+
+* As per standard variable names should start with _ or lowercase letters. Change PRICE to _price(if internal) or price(if public).
+
+* As per ERC20 token standard decimals should be unit8 instead of uint256. If you mention uint it is by default uint256.
+
+* Assign all functions the visibility modifier like public, internal or external. By default the modifier is assumed to be public by the solidity compiler.
+
+* _tokenLeft should be removed as its purpose is not clear.
+
+* After line 85 a Transfer event should be fired since you are actually assigning all the tokens to the owner.
+
 ##7. Good to have
-```
-*Point 1:
-```
-In approve and transferFrom please keep note of https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
-```
-*Point 2:
-```
-It will be good to have if in approve you check the sender has the balance before approving and has not approved others to use that balance.
-```
+
+* In approve and transferFrom please keep note of https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+
+* It will be good to have if in approve you check the sender has the balance before approving and has not approved others to use that balance.
+
 Ex- Alice has 1000 tokens and she has already approved bob to spend 500 tokens on behalf of her now she wants to allow Sameep to spend 600 tokens on her behalf. So if we will look Alice has given capacity to spend 1100 tokens on her behalf whereas she only owns 1000 tokens. So when she was allowing sameep to spend 600 on her behalf the transaction should be reverted. This is good to have.
 
 

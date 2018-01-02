@@ -15,7 +15,7 @@ The audit makes no statements or warranties about utility of the code, safety of
 The project has only one file, the VTOSToken.sol file which contains 212 lines of Solidity code. All the functions and state variables are well commented using the natspec documentation for the functions which is good to understand quickly how everything is supposed to work.  
 *Nice Features:*  
 The contract provides a good suite of functionality that will be useful for the entire contract:
-It uses [SafeMath](https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/math/SafeMath.sol) library to check for overflows and underflows which is a pretty good practise, All the ERC20 functions are included but approve, transfer and transferFrom functions are not ERC20 complaint.
+It uses [SafeMath](https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/math/SafeMath.sol) library to check for overflows and underflows which is a pretty good practise.
 
 ## 3. Attacks made to the contract
 In order to check for the security of the contract, we tested several attacks in order to make sure that the contract is secure and follows best practices.
@@ -112,6 +112,8 @@ Ex- Alice has 1000 tokens and she has already approved bob to spend 500 tokens o
 Overall the code is well commented.
 My final recommendation would be to pay more attention to the visibility of the functions since it’s quite important to define who’s supposed to executed the functions and to follow best practices regarding the use of assert, require etc. (which you are doing ;).
 I will also recommend to not put commented code. Because of commented code certain portion of the contract is useless and hence the contract is not ready for deployment and is not safe to use, since the commented code deals with the payable methods and will result in the loss of funds.
+ All the ERC20 functions are included but approve, transfer and transferFrom functions are not ERC20 compliant.
+
 
 
 

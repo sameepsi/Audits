@@ -84,10 +84,13 @@ parsecToken.transfer(owner, unspentAmount);
 
 * Fallback method will consume more than 23000 gas units. So if someone will send ether from the contract using send() or transfer() methods, it will fail. Consider this also.
 
+* Certain parameters in the code are hard coded, like token address. It will be good is such parameters are passed as paramters while deploying contract.
+
 
 ## 7. Summary of the audit
 * Overall the code is well commented.
-My final recommendation would be to pay more attention to the external functions which are called from the contract.
+
+* My final recommendation would be to pay more attention to the external functions which are called from the contract.
 
 * I will also recommend to not put commented code. Because of commented code certain portion of the contract is useless and hence the contract is not ready for deployment.
 

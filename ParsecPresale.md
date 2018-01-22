@@ -22,7 +22,7 @@ An overflow happens when the limit of the type variable uint256 , 2 ** 256, is e
   
   On the other hand, an underflow happens when you try to subtract 0 minus a number bigger than 0.For example, if you subtract 0 - 1 the result will be = 2 ** 256 instead of -1.  
   
-  This is quite dangerous. This contract checks for overflows and underflows but it will be good if the contract will use(https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/math/SafeMath.sol). There are certain instances where multiplication and division are not properly checked.
+  This is quite dangerous. This contract checks for overflows and underflows but it will be good if the contract will use- [link](https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/math/SafeMath.sol). There are certain instances where multiplication and division are not properly checked.
 
 
 ## 4. Critical vulnerabilities found in the contract
@@ -43,7 +43,7 @@ This is not a good practice since there could be major changes between versions 
 
 * At line number 117, 120, 126, 164, 177, 210, 211, 233, 256 - Avoid to make time-based decisions in your business logic. The timestamp of the block can be manipulated by the miner, and all direct and indirect uses of the timestamp should be considered.Block numbers and average block time can be used to estimate time.
 
-* At line number 187- Call to external contract should be done at the last after making changes to the state variables. This might lead to re-enterancy problem.[link](https://consensys.github.io/smart-contract-best-practices/recommendations/#external-calls)
+* At line number 187- Call to external contract should be done at the last after making changes to the state variables. This might lead to re-enterancy problem- [link](https://consensys.github.io/smart-contract-best-practices/recommendations/#external-calls)
 
 Change 
 ```
@@ -97,4 +97,4 @@ My final recommendation would be to pay more attention to the external functions
 
 * The use modifiers in the functions and state variables are explicitly specified which increases the readability of the contract and makes it more trustworthy.
 
-* It will be good if contract will have a circuit breaker to stop contract execution in case of any emergency or attacks[link](https://consensys.github.io/smart-contract-best-practices/software_engineering/#circuit-breakers-pause-contract-functionality).
+* It will be good if contract will have a circuit breaker to stop contract execution in case of any emergency or attacks- [link](https://consensys.github.io/smart-contract-best-practices/software_engineering/#circuit-breakers-pause-contract-functionality).

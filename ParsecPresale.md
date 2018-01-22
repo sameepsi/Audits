@@ -29,7 +29,7 @@ An overflow happens when the limit of the type variable uint256 , 2 ** 256, is e
 ## 4. Critical vulnerabilities found in the contract
 * Constructor at line number 97 is payable and contains empty block. Please either put in some code which needs to be executed or remove the constructor. A method should only be payable if it expects to receive ether.
 
-*addToWhiteList method defined at line number 293 is private and is not used anywhere. Because of this nobody will be able to buy tokens in first 2 hours of the sale, since first 2 hours of sale only allows whitelisted investor to put in his/her money.
+* addToWhiteList method defined at line number 293 is private and is not used anywhere. Because of this nobody will be able to buy tokens in first 2 hours of the sale, since first 2 hours of sale only allows whitelisted investor to put in his/her money.
 
 Either use this method or make this method public and usable by owner only, so that owner may be able to add senders to white list.
 

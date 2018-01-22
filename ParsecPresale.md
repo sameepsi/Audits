@@ -6,8 +6,7 @@ In this Smart Contract audit we’ll cover the following topics:
 4. Critical vulnerabilities found in the contract
 5. Medium vulnerabilities found in the contract
 6. Low severity vulnerabilities found
-7. Good to have
-8. Summary of the audit
+7. Summary of the audit
 
 ## 1. Disclaimer
 The audit makes no statements or warranties about utility of the code, safety of the code, suitability of the business model, regulatory regime for the business model, or any other statements about fitness of the contracts to purpose, or their bug free status. The audit documentation is for discussion purposes only.
@@ -86,9 +85,8 @@ parsecToken.transfer(owner, unspentAmount);
 * Fallback method will consume more than 23000 gas units. So if someone will send ether from the contract using send() or transfer() methods, it will fail. Consider this also.
 
 
-## 8. Summary of the audit
+## 7. Summary of the audit
 * Overall the code is well commented.
 My final recommendation would be to pay more attention to the external functions which are called from the contract.
 
-I will also recommend to not put commented code. Because of commented code certain portion of the contract is useless and hence the contract is not ready for deployment.
-
+* I will also recommend to not put commented code. Because of commented code certain portion of the contract is useless and hence the contract is not ready for deployment.

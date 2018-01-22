@@ -93,7 +93,7 @@ My final recommendation would be to pay more attention to the external functions
 
 * The contract has 'Speed Bumps' which allows for sometime to recover in case of attacks.
 
-* The contract check for the modifiers very proficiently.
+* The contract checks for the modifiers very proficiently.
 
 * The use modifiers in the functions and state variables are explicitly specified which increases the readability of the contract and makes it more trustworthy.
 

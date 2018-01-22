@@ -90,3 +90,11 @@ parsecToken.transfer(owner, unspentAmount);
 My final recommendation would be to pay more attention to the external functions which are called from the contract.
 
 * I will also recommend to not put commented code. Because of commented code certain portion of the contract is useless and hence the contract is not ready for deployment.
+
+* The contract has 'Speed Bumps' which allows for sometime to recover in case of attacks.
+
+* The contract check for the modifiers very proficiently.
+
+* The use modifiers in the functions and state variables are explicitly specified which increases the readability of the contract and makes it more trustworthy.
+
+* It will be good if contract will have a circuit breaker to stop contract execution in case of any emergency or attacks[link](https://consensys.github.io/smart-contract-best-practices/software_engineering/#circuit-breakers-pause-contract-functionality).

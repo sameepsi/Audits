@@ -28,12 +28,12 @@ An overflow happens when the limit of the type variable uint256 , 2 ** 256, is e
 ## 4. Critical vulnerabilities found in the contract
 * Constructor at line number 97 is payable and contains empty block. Please either put in some code which needs to be executed or remove the constructor. A method should only be payable if it expects to receive ether.
 
-  ** Comment from parsec team- **payable modifier removed, contract constructor cleaned up
+  **Comment from parsec team-** payable modifier removed, contract constructor cleaned up
   
 * addToWhiteList method defined at line number 293 is private and is not used anywhere. Because of this nobody will be able to buy tokens in first 2 hours of the sale, since first 2 hours of sale only allows whitelisted investor to put in his/her money.
 
 Either use this method or make this method public and usable by owner only, so that owner may be able to add senders to white list.
-    ** Comment from parsec team- **addToWhitelist private method is used in external onlyOwner methods to import whitelist chunks
+    **Comment from parsec team-** ddToWhitelist private method is used in external onlyOwner methods to import whitelist chunks
 
 
 ## 5. Medium vulnerabilities found in the contract
@@ -41,12 +41,12 @@ Either use this method or make this method public and usable by owner only, so t
 * You’re specifying a pragma version with the caret symbol (^) up front which tells the compiler to use any version of solidity bigger than 0.4.17 .  
 
 This is not a good practice since there could be major changes between versions that would make your code unstable. That’s why I recommend to set a fixed version without the caret like 0.4.11.
-  ** Comment from parsec team- **Set to 0.4.18 as this is a compiler version in dev machine. Can be set to 0.4.19 upon deployment.
+  **Comment from parsec team- ** Set to 0.4.18 as this is a compiler version in dev machine. Can be set to 0.4.19 upon deployment.
   
 * I would recommend you to use latest versions of solidity compiler instead of older versions as latest versions contains many critical bug fixes. Using compiler version 0.4.19 is recommended.
 
 * At line number 117, 120, 126, 164, 177, 210, 211, 233, 256 - Avoid to make time-based decisions in your business logic. The timestamp of the block can be manipulated by the miner, and all direct and indirect uses of the timestamp should be considered.Block numbers and average block time can be used to estimate time.
-** Comment from parsec team- **Our main indicator is total amount of raised ether. Either we raise a minimal cap or not. Date-related logic is important but not that critical.
+**Comment from parsec team-** Our main indicator is total amount of raised ether. Either we raise a minimal cap or not. Date-related logic is important but not that critical.
 
 * At line number 187- Call to external contract should be done at the last after making changes to the state variables. This might lead to re-enterancy problem- [link](https://consensys.github.io/smart-contract-best-practices/recommendations/#external-calls)
 
@@ -60,13 +60,13 @@ to
 unspentCreditsWithdrawn = true;
 parsecToken.transfer(owner, unspentAmount);
 ```
-** Comment from parsec team- **Fixed as suggested
+**Comment from parsec team-** Fixed as suggested
 
 * At line number 202- Follow previous suggestion made.
-** Comment from parsec team- **Fixed as suggested
+**Comment from parsec team-** Fixed as suggested
 
 * At line number 202- unspend amount is calculated after deducting grantedParsecCredits from the token balance of the contract address. Suppose owner calls this method after the token withdrawal has started and some investors has already claimed their credit tokens. In this case the balanceOf the contract will reduce and their might be the case when parsecToken.balanceOf(this) is less than grantedParsecCredits. Though this will be catched in safeDecrement, still it should be specifically handled to remove any confusion. Or an extra check should be there to check if token withdrawal has started or not.
-** Comment from parsec team- **Fixed as suggested
+**Comment from parsec team-** Fixed as suggested
 
 * At line number 202- Call to external call is made and after that state variables are changed at line 223 and 226. This may lead to re-entrancy as discussed above. Please change it to following code-:
 ```      
@@ -80,24 +80,24 @@ parsecToken.transfer(owner, unspentAmount);
         // Give allowance for participant to withdraw certain amount of Parsec credits
         parsecToken.approve(msg.sender, tokensToSend);
 ```
-** Comment from parsec team- **Fixed as suggested
+**Comment from parsec team-** Fixed as suggested
 
 * At line number 276- Follow previous suggestions.
-** Comment from parsec team- **Fixed as suggested
+**Comment from parsec team-** Fixed as suggested
 
 
 ## 6. Low severity vulnerabilities found
 
 * At line number 307- Check for overflow and underflow is missing while multiplying and dividing 2 numbers. I would suggest you to use open-zepplin's SafeMath.sol for proper overflow and underflow checking. 
-** Comment from parsec team- **Used SafeMath as suggested
+**Comment from parsec team-** Used SafeMath as suggested
 
 * Please fix all the FIX ME comments.
-** Comment from parsec team- **FIXED
+**Comment from parsec team-** FIXED
 
 * Fallback method will consume more than 23000 gas units. So if someone will send ether from the contract using send() or transfer() methods, it will fail. Consider this also.
 
 * Certain parameters in the code are hard coded, like token address. It will be good is such parameters are passed as paramters while deploying contract.
-** Comment from parsec team- **Previously hardcoded token address moved to contract constructor
+**Comment from parsec team-** Previously hardcoded token address moved to contract constructor
 
 ## 7. Summary of the audit
 * Overall the code is well commented.

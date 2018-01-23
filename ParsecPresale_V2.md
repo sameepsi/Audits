@@ -11,7 +11,9 @@ In this Smart Contract audit we’ll cover the following topics:
 ## 1. Disclaimer
 The audit makes no statements or warranties about utility of the code, safety of the code, suitability of the business model, regulatory regime for the business model, or any other statements about fitness of the contracts to purpose, or their bug free status. The audit documentation is for discussion purposes only.
 ## 2. Overview
-The project has only one file, the ParsecPresale.sol file which contains 335 lines of Solidity code. All the functions and state variables are well commented using the natspec documentation for the functions which is good to understand quickly how everything is supposed to work.  
+The project has only one file, the ParsecPresale.sol file which contains 335 lines of Solidity code. All the functions and state variables are well commented using the natspec documentation for the functions which is good to understand quickly how everything is supposed to work.
+
+> **The Parsec Frontiers team has gone through the audit recommendations, and has addressed the issues highlighted throughout the report**
 
 ## 3. Attacks made to the contract
 In order to check for the security of the contract, we tested several attacks in order to make sure that the contract is secure and follows best practices.

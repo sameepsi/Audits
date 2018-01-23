@@ -26,7 +26,7 @@ An overflow happens when the limit of the type variable uint256 , 2 ** 256, is e
 
 
 ## 4. Critical vulnerabilities found in the contract
-* Constructor at line number 97 is payable and contains empty block. Please either put in some code which needs to be executed or remove the constructor. A method should only be payable if it expects to receive ether.
+* Constructor at line number 97 is payable and contains empty block. Please either put in some code which needs to be executed or remove the constructor. A method should only be payable if it expects to receive ether.  
 
   **Comment from parsec team-** payable modifier removed, contract constructor cleaned up
   

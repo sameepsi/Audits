@@ -34,7 +34,7 @@ An overflow happens when the limit of the type variable uint256 , 2 ** 256, is e
 
 Either use this method or make this method public and usable by owner only, so that owner may be able to add senders to white list.
 
- > `Comment from parsec team- addToWhitelist private method is used in external onlyOwner methods to import whitelist chunks`
+ > **_Comment from parsec team- addToWhitelist private method is used in external onlyOwner methods to import whitelist chunks_**
 
 
 ## 5. Medium vulnerabilities found in the contract

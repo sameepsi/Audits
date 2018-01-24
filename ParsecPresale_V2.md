@@ -25,6 +25,7 @@ An overflow happens when the limit of the type variable uint256 , 2 ** 256, is e
   On the other hand, an underflow happens when yact constructor cleaned upou try to subtract 0 minus a number bigger than 0.For example, if you subtract 0 - 1 the result will be = 2 ** 256 instead of -1.  
   
   This is quite dangerous. This contract checks for overflows and underflows but it will be good if the contract will use- [link](https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/math/SafeMath.sol). There are certain instances where multiplication and division are not properly checked.
+  > **Comment from parsec team-** *Fixed by using SafeMath in all arithmetic operations*
 
 
 ## 4. Critical vulnerabilities found in the contract
